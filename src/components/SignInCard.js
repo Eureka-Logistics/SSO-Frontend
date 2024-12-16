@@ -95,10 +95,16 @@ export default function SignInCard() {
 
     setLoading(true); // Start loading animation
 
+    const params = new URLSearchParams(window.location.search);
+    const client = params.get('client') || 'compro'; // Default to 'compro'
+    const loginEndpoint = client === 'academy' 
+      ? 'https://academy.example.com/oauth/login' 
+      : 'https://compro.example.com/oauth/login';
+  
     const payload = {
       email,
       password,
-      client: "elog",
+      client,
     };
 
     try {
