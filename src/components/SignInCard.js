@@ -106,7 +106,7 @@ export default function SignInCard() {
     };
 
     try {
-      const response = await fetch('https:/api-sso-v2.eurekagroup.id/oauth/login', {
+      const response = await fetch('https://api-sso-v2.eurekagroup.id/oauth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
