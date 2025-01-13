@@ -11,6 +11,8 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import { styled } from '@mui/material/styles';
 // Import Montserrat font
 import '@fontsource/montserrat';
@@ -26,21 +28,17 @@ const Card = styled(MuiCard)(({ theme }) => ({
   gap: theme.spacing(2),
   boxShadow:
     'hsla(220, 30%, 5%, 0.05) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px',
-  fontFamily: 'Montserrat, Arial, sans-serif', // Set Montserrat as the font
+  fontFamily: 'Montserrat, Arial, sans-serif',
   [theme.breakpoints.up('sm')]: {
     width: '450px',
   },
-  ...theme.applyStyles('dark', {
-    boxShadow:
-      'hsla(220, 30%, 5%, 0.5) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.08) 0px 15px 35px -5px',
-  }),
 }));
 
 export default function SignInCard() {
-  const [email, setEmail] = React.useState('');
+  const [emailOrEmpId, setEmailOrEmpId] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [emailError, setEmailError] = React.useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
+  const [emailOrEmpIdError, setEmailOrEmpIdError] = React.useState(false);
+  const [emailOrEmpIdErrorMessage, setEmailOrEmpIdErrorMessage] = React.useState('');
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
   const [loading, setLoading] = React.useState(false); // Loading state
@@ -66,13 +64,13 @@ export default function SignInCard() {
   const validateInputs = () => {
     let isValid = true;
 
-    if (!email || !/\S+@\S+\.\S+/.test(email)) {
-      setEmailError(true);
-      setEmailErrorMessage('Please enter a valid email address.');
+    if (!emailOrEmpId) {
+      setEmailOrEmpIdError(true);
+      setEmailOrEmpIdErrorMessage('Please enter a valid email or employee ID.');
       isValid = false;
     } else {
-      setEmailError(false);
-      setEmailErrorMessage('');
+      setEmailOrEmpIdError(false);
+      setEmailOrEmpIdErrorMessage('');
     }
 
     if (!password || password.length < 6) {
@@ -102,13 +100,13 @@ export default function SignInCard() {
       : 'https://compro.example.com/oauth/login';
   
     const payload = {
-      email,
+      emailOrEmpId, // Use emailOrEmpId
       password,
       client,
     };
 
     try {
-      const response = await fetch('https://api-sso-v2.eurekagroup.id/oauth/login', {
+      const response = await fetch('https://3wzg6m6x-6969.asse.devtunnels.ms/oauth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -169,21 +167,21 @@ export default function SignInCard() {
         sx={{ display: 'flex', flexDirection: 'column', width: '100%', gap: 2 }}
       >
         <FormControl>
-          <FormLabel htmlFor="email" sx={{ fontFamily: 'Montserrat, Arial, sans-serif' }}>Email</FormLabel>
+          <FormLabel htmlFor="emailOrEmpId" sx={{ fontFamily: 'Montserrat, Arial, sans-serif' }}>Email or Employee ID</FormLabel>
           <TextField
-            error={emailError}
-            helperText={emailErrorMessage}
-            id="email"
-            type="email"
-            name="email"
-            placeholder="your@email.com"
+            error={emailOrEmpIdError}
+            helperText={emailOrEmpIdErrorMessage}
+            id="emailOrEmpId"
+            type="text"
+            name="emailOrEmpId"
+            placeholder="your@email.com or emp_id"
             autoComplete="email"
             autoFocus
             required
             fullWidth
             variant="outlined"
-            color={emailError ? 'error' : 'primary'}
-            onChange={(e) => setEmail(e.target.value)}
+            color={emailOrEmpIdError ? 'error' : 'primary'}
+            onChange={(e) => setEmailOrEmpId(e.target.value)}
             sx={{ fontFamily: 'Montserrat, Arial, sans-serif' }}
           />
         </FormControl>
