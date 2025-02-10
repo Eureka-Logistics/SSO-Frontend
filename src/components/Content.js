@@ -7,6 +7,7 @@ import LinkRoundedIcon from '@mui/icons-material/LinkRounded';
 import LockRoundedIcon from '@mui/icons-material/LockRounded';
 import LanguageRoundedIcon from '@mui/icons-material/LanguageRounded';
 import PrecisionManufacturingRoundedIcon from '@mui/icons-material/PrecisionManufacturingRounded';
+import logo from './eureka_group_logo.png';
 
 import { SitemarkIcon } from './CustomIcons';
 
@@ -16,27 +17,27 @@ import '@fontsource/montserrat';
 const items = [
   {
     icon: <LinkRoundedIcon sx={{ color: 'text.secondary' }} />,
-    title: 'Streamlined Access',
+    title: 'Akses Mudah',
     description:
-      'Easily log in across all your connected services in one step, saving you time and hassle.',
+      'Login sekali untuk terhubung ke semua aplikasi internal perusahaan, lebih cepat dan praktis.',
   },
   {
     icon: <LockRoundedIcon sx={{ color: 'text.secondary' }} />,
-    title: 'Reliable Security',
+    title: 'Keamanan Terjamin',
     description:
-      'Trust a robust, secure authentication experience that keeps your data protected.',
+      'Data Anda tetap aman dengan sistem autentikasi yang andal dan terlindungi.',
   },
   {
     icon: <LanguageRoundedIcon sx={{ color: 'text.secondary' }} />,
-    title: 'User-Centric Design',
+    title: 'Desain Intuitif',
     description:
-      'Enjoy an intuitive, responsive interface that fits naturally into your workflow.',
+      'Antarmuka yang responsif dan mudah digunakan, mendukung kenyamanan dalam bekerja.',
   },
   {
     icon: <PrecisionManufacturingRoundedIcon sx={{ color: 'text.secondary' }} />,
-    title: 'Cutting-Edge Technology',
+    title: 'Teknologi Canggih',
     description:
-      'Experience powerful functionality tailored to your needs, backed by the latest advancements.',
+      'Didukung oleh inovasi terbaru untuk memastikan akses yang lancar dan efisien.',
   },
 ];
 
@@ -52,7 +53,7 @@ export default function Content() {
       }}
     >
       <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-        <SitemarkIcon />
+      <img src={logo} style={{ width: '30%', height: '30%', objectFit: 'cover' }} />
       </Box>
       {items.map((item, index) => (
         <Stack key={index} direction="row" sx={{ gap: 2 }}>

@@ -18,6 +18,7 @@ import { styled } from '@mui/material/styles';
 import '@fontsource/montserrat';
 // import ForgotPassword from './ForgotPassword';
 import { GoogleIcon, FacebookIcon, SitemarkIcon } from './CustomIcons';
+import logo from './eureka_group_logo.png';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -94,7 +95,7 @@ export default function SignInCard() {
     setLoading(true); // Start loading animation
 
     const params = new URLSearchParams(window.location.search);
-    const client = params.get('client') || 'compro'; // Default to 'compro'
+    const client = params.get('client') || 'compro' || 'admin-masdis'; // Default to 'compro'
     const loginEndpoint = client === 'academy' 
       ? 'https://academy.example.com/oauth/login' 
       : 'https://compro.example.com/oauth/login';
@@ -106,7 +107,7 @@ export default function SignInCard() {
     };
 
     try {
-      const response = await fetch('https://api-sso-v2.eurekagroup.id/oauth/login', {
+      const response = await fetch('https://3wzg6m6x-6969.asse.devtunnels.ms/oauth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -147,7 +148,7 @@ export default function SignInCard() {
   return (
     <Card variant="outlined">
       <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-        <SitemarkIcon />
+      <img src={logo} style={{ width: '30%', height: '30%', objectFit: 'cover' }} />
       </Box>
       <Typography 
         component="h1" 
