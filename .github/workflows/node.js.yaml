@@ -1,0 +1,70 @@
+name: CD - Next.js
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      # - name: Create env file
+      #   run: |
+      #     echo "NEXT_PUBLIC_URL=${{ secrets.NEXT_PUBLIC_URL }}" > .env.production
+      #     echo "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}" >> .env.production
+      #     # Tambahkan env variables lain yang dibutuhkan
+
+      - name: Install Dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Build Project
+        run: npm run build
+
+      - name: Archive Build
+        run: |
+          tar --ignore-failed-read -czf build.tar.gz \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='build.tar.gz' \
+            .
+
+      - name: Upload to Server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.IPSERVER }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          passphrase: ${{ secrets.PASSPHARSE }}
+          port: ${{ secrets.PORT }}
+          source: "build.tar.gz"
+          target: "/home/siplah/sites/SSO-Frontend/"
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.IPSERVER }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          passphrase: ${{ secrets.PASSPHARSE }}
+          port: ${{ secrets.PORT }}
+          script: |
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            cd /home/siplah/sites/SSO-Frontend
+            tar -xzf build.tar.gz
+            # cp -r * /home/masterdiskonroot/sites/masterdiskon.com/
+            # pm2 start masterdiskon_prod
+            # pm2 list
